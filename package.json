@@ -1,0 +1,25 @@
+{
+  "name": "ultimate-notation",
+  "version": "1.0.0",
+  "description": "Convert song's notation from letter to solfege in ultimate-guitar",
+  "browserslist": [
+    "defaults"
+  ],
+  "scripts": {
+    "start": "parcel watch src/manifest.json --host localhost",
+    "build": "parcel build manifest.json"
+  },
+  "keywords": [
+    "notation",
+    "music"
+  ],
+  "author": "asanvicentec",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/config-webextension": "^2.11.0",
+    "@types/chrome": "^0.0.260",
+    "parcel": "^2.11.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3"
+  }
+}

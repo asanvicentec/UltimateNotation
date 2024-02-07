@@ -1,0 +1,21 @@
+{
+    "name": "Ultimate Notation",
+    "description": "Base Level Extension",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "images/un-128.png"
+    },
+    "icons": {
+      "128": "images/un-128.png"
+    },
+    "content_scripts": [
+      {
+        "js": ["scripts/content.ts"],
+        "matches": [
+          "https://tabs.ultimate-guitar.com/tab/*"
+        ]
+      }
+    ]
+  }
