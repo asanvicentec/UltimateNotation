@@ -1,0 +1,17 @@
+html {
+    height: 15em;
+    width: 12em;
+}
+
+#infoLabel {
+    border-bottom: 2px dotted #b7b7b7;
+}
+
+[data-tooltip]:hover::after {
+    display: block;
+    position: absolute;
+    content: attr(data-tooltip);
+    border: 1px solid gray;
+    background: #eee;
+    padding: .25em;
+  }

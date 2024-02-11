@@ -5,11 +5,15 @@
     "manifest_version": 3,
     "action": {
       "default_popup": "index.html",
-      "default_icon": "images/un-128.png"
+      "default_icon": "assets/img/un-128.png"
     },
     "icons": {
-      "128": "images/un-128.png"
+      "128": "assets/img/un-128.png"
     },
+    "permissions": [
+      "contextMenus",
+      "clipboardWrite" 
+    ],
     "content_scripts": [
       {
         "js": ["scripts/content.ts"],
