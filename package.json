@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "start": "parcel watch src/manifest.json --host localhost",
-    "build": "parcel build manifest.json"
+    "clean": "rm -rf dist",
+    "build": "parcel build src/manifest.json"
   },
   "keywords": [
     "notation",
