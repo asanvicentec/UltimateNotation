@@ -35,8 +35,8 @@ jobs:
       - name: Zip extension
         run: zip -r ultimate-notation.zip dist/
 
-      - uses: softprops/action-gh-release@v1
       - name: Release
+      - uses: softprops/action-gh-release@v1
         with:
           files: ultimate-notation.zip
 
