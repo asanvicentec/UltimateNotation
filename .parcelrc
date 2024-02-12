@@ -1,0 +1,4 @@
+{
+  //https://parceljs.org/recipes/web-extension/
+  "extends": "@parcel/config-webextension"
+}
