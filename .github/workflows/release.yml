@@ -36,7 +36,7 @@ jobs:
         run: zip -r ultimate-notation.zip dist/
 
       - name: Release
-      - uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           files: ultimate-notation.zip
 
