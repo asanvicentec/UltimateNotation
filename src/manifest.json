@@ -18,7 +18,7 @@
       {
         "js": ["scripts/content.ts"],
         "matches": [
-          "https://tabs.ultimate-guitar.com/tab/*"
+          "https://freetar.de/tab/*"
         ]
       }
     ]

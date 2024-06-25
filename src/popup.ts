@@ -1,14 +1,11 @@
-import { CopyType } from "./scripts/enum";
+document.getElementById("copyToClipboardBtn")!.addEventListener("click", () => copySong());
 
-document.getElementById("copyBasicBtn")!.addEventListener("click", () => copySong(CopyType.basic));
-document.getElementById("copyAdvancedBtn")!.addEventListener("click", () => copySong(CopyType.advanced));
-
-async function copySong(btnAction: CopyType) {
-
+async function copySong() {
+    console.log("e");
     const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
 
     await chrome.tabs.update(tab.id, { active: true });
     await chrome.windows.update(tab.windowId, { focused: true });
 
-    const response = await chrome.tabs.sendMessage(tab.id, {copySong: btnAction});
+    const response = await chrome.tabs.sendMessage(tab.id, {});
 }
