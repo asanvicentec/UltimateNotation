@@ -1,5 +1,3 @@
-import { copyTextToClipboard } from "./utils";
-
 const solfegeDictionary = {
     c: "DO",
     d: "RE",
@@ -32,23 +30,4 @@ if (tab) {
             }
         }
     })
-
-    //console.log(tab.innerText);
-    copyTextToClipboard(tab.innerText);
-    
-    chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
-        
-        
-        try {
-            tab?.focus()
-
-            tab === null ? console.log("No song found") : await copyTextToClipboard(tab.innerText);
-        } catch (e) {
-            sendResponse({ response: `Something went wrong:${e}` });
-        }
-
-        tab?.focus()
-
-        tab === null ? console.log("No song found") : await copyTextToClipboard(tab.innerText);
-    });
 }

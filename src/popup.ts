@@ -1,11 +1,20 @@
+import { copyTextToClipboard } from "./scripts/utils";
+
 document.getElementById("copyToClipboardBtn")!.addEventListener("click", () => copySong());
+const resNode = document.querySelector("#result");
+
+const getContent = () => {
+    return document.querySelector('.tab').innerText;
+}
 
 async function copySong() {
-    console.log("e");
-    const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-
-    await chrome.tabs.update(tab.id, { active: true });
-    await chrome.windows.update(tab.windowId, { focused: true });
-
-    const response = await chrome.tabs.sendMessage(tab.id, {});
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            func: getContent
+        }, (result) => {
+            copyTextToClipboard(result[0].result);
+            resNode!.innerHTML = "Copied successfully!"
+        });
+    });
 }
