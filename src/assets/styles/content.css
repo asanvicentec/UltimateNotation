@@ -1,0 +1,32 @@
+/* Experiment to to give a visual aid and to help cases where two notes are too close togheter after conversion (nasty workaround) 
+    To inject the CSS, add the following to the content script object matching freetar site:
+    "css": ["assets/styles/content.css"]
+*/
+
+[data-original="C"] {
+    color: rgba(235, 35, 15, 1);
+}
+
+[data-original="D"] {
+    color: rgba(252, 146, 8, 1);
+}
+
+[data-original="E"] {
+    color: rgba(254, 251, 1, 1);
+}
+
+[data-original="F"] {
+    color: rgba(2, 141, 2, 1);
+}
+
+[data-original="G"] {
+    color: rgba(115, 212, 254, 1);
+}
+
+[data-original="A"] {
+    color: rgba(7, 24, 147, 1);
+}
+
+[data-original="B"] {
+    color: rgba(82, 29, 144, 1);
+}

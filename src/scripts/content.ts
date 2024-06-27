@@ -1,8 +1,3 @@
-import { copyTextToClipboard } from "./utils";
-import { CopyType } from "./enum";
-
-
-
 const solfegeDictionary = {
     c: "DO",
     d: "RE",
@@ -12,82 +7,30 @@ const solfegeDictionary = {
     a: "LA",
     b: "SI",
 };
-const solfegeList: string[] = ["DO", "RE", "MI", "FA", "SOL", "LA", "SI"];
 
-const article: HTMLElement | null = document.querySelector('code');
-// Cloning node so we don't mess with the dom
+const tab: HTMLElement | null = document.querySelector('.tab');
 
-const articleClone: HTMLElement | undefined = article?.cloneNode(true) as HTMLElement;
-// `document.querySelector` may return null if the selector doesn't match anything.
+if (tab) {
+    tab.childNodes.forEach((item, index) => {
+        if (item.nodeName.toLowerCase() === "span") {
 
-if (articleClone) {
+            const note = item.firstChild!.textContent;
+            let spacesToRemove = item.firstChild!.textContent.substring(1).length;
 
-    const song: HTMLElement | null = articleClone.querySelector('pre');
-    // Each song line includes it's own chords
-    let songLines: HTMLCollection = song!.children;
+            // Conversion
+            item.firstChild!.textContent = solfegeDictionary[note[0].toLowerCase()] + item.firstChild!.textContent.substring(1)
 
-    for (let i = 0; i < songLines.length; i++) {
-        const scores: string[] = <string[]>Array.prototype.map.call(songLines[i].querySelectorAll('[data-name]'), function (tag: HTMLElement) { return tag.textContent; });
-
-        scores.forEach((e: string) => {
-
-            const score: string = e.substring(0, 1);
-
-            // If for whatever reason both conditions fail we set type to undefined
-            let regex: RegExp | undefined = undefined;
-
-            /* Not feeling like doing solfegeDictionary[score.toLowerCase() as keyof typeof solfegeDictionary], 
-                there has to be a more elegant solution */
-            const solfegeRepresentation: string = solfegeDictionary[score.toLowerCase()];
-
-            // Any note that is not SOL
-            if (solfegeRepresentation.length == 2) {
-                regex = new RegExp(score + '\\w*([\r| ]{1}|$)', 'gmi');
-            }
-            // SOL Case
-            else if (solfegeRepresentation.length == 3) {
-                regex = new RegExp(score + '\\w*([\r| ]{2}|$)', 'gmi');
+            if (item.lastChild!.classList.contains("chord-bass")) {
+                item.lastChild!.textContent = solfegeDictionary[item.lastChild!.textContent.toLowerCase()] + item.lastChild!.textContent.substring(1)
+                spacesToRemove += -Math.abs(item.lastChild!.textContent!.length) + 1;
             }
 
-            // Grab original score and replace it with Solfege representation
-            let solfege: string = e.replace(score, solfegeRepresentation);
+            // Remove spaces
+            if (tab.childNodes[index + 1].nodeName === "#text") {
 
-            let inlineChords = songLines[i].children[0].textContent;
-
-            if (inlineChords && regex) {
-                //If original score is actually a Solfege, the score has already been replaced, leave as is, otherwise replace it
-                songLines[i].children[0].textContent = inlineChords.replaceAll(regex, (originalScore: string) =>
-                    solfegeList.includes(originalScore.replace(/\s+/g, '')) ? originalScore : solfege);
+                spacesToRemove += -Math.abs(item.firstChild!.textContent!.length) + 1;
+                tab.childNodes[index + 1].textContent = tab.childNodes[index + 1].textContent!.slice(0, spacesToRemove);
             }
-
-        });
-    }
-    copyTextToClipboard(song.innerText)
-    
-
-    chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
-        switch (request.copySong) {
-            case CopyType.basic:
-                transposeBasic(song!);
-                break;
-            case CopyType.advanced:
-                // transposeAdvanced();
-                break;
-            default:
-                sendResponse({ response: "Incorrect copy type!"});
-                
         }
-        articleClone?.focus()
-        
-        song === null ? console.log("No song found") : await copyTextToClipboard(song.innerText);
-    });
-}
-
-async function transposeBasic(song: HTMLElement) {
-    await song.querySelectorAll('[data-name]').forEach(e => {
-        if (e.textContent !== null) {
-            const score = e.textContent.substring(0, 1)
-            e.textContent = e.textContent.replace(score, solfegeDictionary[score.toLowerCase()])
-        }
-    });
+    })
 }

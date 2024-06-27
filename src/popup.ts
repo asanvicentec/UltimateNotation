@@ -1,14 +1,20 @@
-import { CopyType } from "./scripts/enum";
+import { copyTextToClipboard } from "./scripts/utils";
 
-document.getElementById("copyBasicBtn")!.addEventListener("click", () => copySong(CopyType.basic));
-document.getElementById("copyAdvancedBtn")!.addEventListener("click", () => copySong(CopyType.advanced));
+document.getElementById("copyToClipboardBtn")!.addEventListener("click", () => copySong());
+const resNode = document.querySelector("#result");
 
-async function copySong(btnAction: CopyType) {
+const getContent = () => {
+    return document.querySelector('.tab').innerText;
+}
 
-    const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-
-    await chrome.tabs.update(tab.id, { active: true });
-    await chrome.windows.update(tab.windowId, { focused: true });
-
-    const response = await chrome.tabs.sendMessage(tab.id, {copySong: btnAction});
+async function copySong() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            func: getContent
+        }, (result) => {
+            copyTextToClipboard(result[0].result);
+            resNode!.innerHTML = "Copied successfully!"
+        });
+    });
 }
