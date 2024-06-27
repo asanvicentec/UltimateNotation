@@ -12,7 +12,9 @@
     },
     "permissions": [
       "contextMenus",
-      "clipboardWrite" 
+      "clipboardWrite",
+      "scripting",
+      "activeTab"
     ],
     "content_scripts": [
       {
