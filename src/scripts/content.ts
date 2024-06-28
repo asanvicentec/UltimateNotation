@@ -22,11 +22,11 @@ function convert() {
         tab.childNodes.forEach((item, index) => {
             if (item.nodeName.toLowerCase() === "span") {
 
-                const note = item.firstChild!.textContent;
-                let spacesToRemove = item.firstChild!.textContent!.substring(1).length;
+                const noteNode = item.firstChild;
+                let spacesToRemove = noteNode!.textContent!.substring(1).length;
 
                 // Conversion
-                item.firstChild!.textContent = solfegeDictionary[note[0].toLowerCase()] + item.firstChild!.textContent.substring(1)
+                noteNode!.textContent = solfegeDictionary[noteNode!.textContent[0].toLowerCase()] + noteNode!.textContent!.substring(1)
 
                 let lastChild = item.lastChild;
                 if (lastChild!.classList.contains("chord-bass")) {
@@ -37,7 +37,7 @@ function convert() {
                 // Remove spaces
                 if (tab.childNodes[index + 1].nodeName === "#text") {
 
-                    spacesToRemove += -Math.abs(item.firstChild!.textContent!.length) + 1;
+                    spacesToRemove += -Math.abs(noteNode!.textContent!.length) + 1;
                     tab.childNodes[index + 1].textContent = tab.childNodes[index + 1].textContent!.slice(0, spacesToRemove);
                 }
             }
